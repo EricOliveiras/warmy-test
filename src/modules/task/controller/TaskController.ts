@@ -3,13 +3,13 @@ import { ITask } from '../interface/ITask';
 import { CreateTask, DeleteTask, ReadAllTasks, ReadTask, UpdateTask } from '../service';
 import { TaskRepoitory } from '../repository/TaskRepository';
 
-export class TaskController {
-  constructor(private taskRepository: TaskRepoitory) { }
+const taskRepository = new TaskRepoitory();
 
+export class TaskController {
   public async create(request: Request, response: Response) {
     const { title, description }: ITask = request.body;
 
-    const createTask = new CreateTask(this.taskRepository);
+    const createTask = new CreateTask(taskRepository);
 
     await createTask.execute({ title, description });
 
@@ -19,7 +19,7 @@ export class TaskController {
   }
 
   public async readAll(request: Request, response: Response) {
-    const readAllTasks = new ReadAllTasks(this.taskRepository);
+    const readAllTasks = new ReadAllTasks(taskRepository);
 
     const taks = await readAllTasks.execute();
 
@@ -32,7 +32,7 @@ export class TaskController {
   public async read(request: Request, response: Response) {
     const { id } = request.params;
 
-    const readTask = new ReadTask(this.taskRepository);
+    const readTask = new ReadTask(taskRepository);
 
     const task = await readTask.execute(id);
 
@@ -46,7 +46,7 @@ export class TaskController {
     const { id } = request.params;
     const { title, description, finished }: ITask = request.body;
 
-    const updateTask = new UpdateTask(this.taskRepository);
+    const updateTask = new UpdateTask(taskRepository);
 
     await updateTask.execute(id, {
       title,
@@ -62,7 +62,7 @@ export class TaskController {
   public async delete(request: Request, response: Response) {
     const { id } = request.params;
 
-    const deleteTask = new DeleteTask(this.taskRepository);
+    const deleteTask = new DeleteTask(taskRepository);
 
     await deleteTask.execute(id);
 
