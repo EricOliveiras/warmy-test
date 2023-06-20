@@ -12,6 +12,17 @@ export class UpdateTask {
       throw new HttpException(404, 'Task not found.');
     }
 
+    if (task.finished === true) {
+      await this.taskRepository.update(id, {
+        title: task.title,
+        description: task.description,
+        finished: task.finished,
+        finishedAt: new Date()
+      });
+
+      return;
+    }
+
     await this.taskRepository.update(id, task);
   }
 }
