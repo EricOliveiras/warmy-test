@@ -4,7 +4,7 @@
   "description": "Warmy test project",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon",
+    "build": "tsc",
     "prepare": "husky install",
     "lint": "npx eslint . --cache",
     "pre-commit": "lint-staged"
